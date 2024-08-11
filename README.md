@@ -28,9 +28,7 @@ ng add @angular/material
 // Set up global Angular Material typography styles? Yes
 // Include the Angular animations module? Include and enable animations
 
-npm i @angular/material-experimental
-
-npm i @google/generative-ai@^0.2.1
+npm i @google/generative-ai@^0.16.0
 
 npm i ngx-markdown marked@^9.0.0
 
@@ -281,9 +279,9 @@ export class LineBreakPipe implements PipeTransform {
 ```
 
 ### src/assets/avatar-chatbot.png
-[Link da pasta com as imagens](https://github.com/rpaivabr/ng-gemini/tree/main/src/assets)
+[Link da pasta com as imagens](https://github.com/angularizando/2024-04-04-ng-gemini/tree/main/public)
 ### src/assets/avatar-user.png
-[Link da pasta com as imagens](https://github.com/rpaivabr/ng-gemini/tree/main/src/assets)
+[Link da pasta com as imagens](https://github.com/angularizando/2024-04-04-ng-gemini/tree/main/public)
 
 ### src/app/app-config.ts
 ```typescript
@@ -419,7 +417,7 @@ export class TextComponent {
     <div class="chat-message {{content.agent}}">
     <img
       class="avatar"
-      [src]="'/assets/avatar-' + content.agent + '.png'"
+      [src]="'avatar-' + content.agent + '.png'"
       [alt]="content.agent + 'icon'"
     />
     <div class="message-details">
@@ -576,14 +574,14 @@ export class ChatService {
       history: [
         {
           role: 'user',
-          parts: `You're a poet. Respond to all questions with a rhyming poem.
+          parts: [{
+            text: `You're a poet. Respond to all questions with a rhyming poem.
             What is the capital of California?
-          `,
+          `}],
         },
         {
           role: 'model',
-          parts:
-            'If the capital of California is what you seek, Sacramento is where you ought to peek.',
+          parts: [{ text: 'If the capital of California is what you seek, Sacramento is where you ought to peek.' }],
         },
       ],
     });
@@ -669,7 +667,7 @@ export class ChatComponent {
   <div class="chat-message {{ content.agent }}">
     <img
       class="avatar"
-      [src]="'/assets/avatar-' + content.agent + '.png'"
+      [src]="'avatar-' + content.agent + '.png'"
       [alt]="content.agent + 'icon'"
     />
     <div class="message-details">
@@ -821,7 +819,7 @@ export class VisionService {
 
   constructor() {
     const genAI = new GoogleGenerativeAI(localStorage.getItem('API_KEY')!);
-    this.model = genAI.getGenerativeModel({ model: 'gemini-pro-vision' });
+    this.model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
   }
 
   vision(message: string, imageFile: ImageFile): Observable<ChatContent> {
@@ -943,7 +941,7 @@ export class VisionComponent {
   <div class="chat-message {{ content.agent }}">
     <img
       class="avatar"
-      [src]="'/assets/avatar-' + content.agent + '.png'"
+      [src]="'avatar-' + content.agent + '.png'"
       [alt]="content.agent + 'icon'"
     />
     <div class="message-details">
